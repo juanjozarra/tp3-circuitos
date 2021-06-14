@@ -8,15 +8,21 @@
 #include "menu.h"
 #include "serialPort.h"
 
+volatile unsigned char print_Menu = 0;
+
+char msg [3][64]  = {{"Generador de seniales digitales programable.\r\0"},{"Ingrese frecuencia entre 100 y 10000Hz\r\0"},{"ON: para encender.\rOFF: para apagar.\rRST: para reiniciar.\r\0"}};
+
 void Menu_init(void){
-	SerialPort_Write_String_To_Buffer("Generador de seniales digitales programable\n\rIngrese frecuencia entre 100 y 10000Hz\n\rON: para encender, OFF para apagar, RST para reiniciar");
+	print_Menu = 1;
 }
 
 void Menu_Update(void){
-	SerialPort_Write_String_To_Buffer("n\r\Hola, esto funciona");
-	/*char ch;
-	if (SerialPort_Get_Char_From_Buffer( &ch)){
-		SerialPort_Write_Char_To_Buffer(ch);
-		SerialPort_Write_String_To_Buffer("n\r\ >: ");
-	}*/
+		if(print_Menu){
+			static unsigned char step = 0;
+			SerialPort_Write_String_To_Buffer(msg[step]);
+			step++;
+			if(step==3) {step = 0;
+			print_Menu =0;
+			}
+		}
 }

@@ -16,7 +16,7 @@ static unsigned char Serial_Flag=0;
 
 
 void SEOSTimer0Init(){
-	OCR0A = 78; //Valor con el cual comparar
+	OCR0A = 77; //Valor con el cual comparar
 	TCCR0A = (1<<WGM01);// = 0b00000010; Modo CTC
 	TCCR0B = (1<<CS02)|(1<<CS00); // = 0b00000101; clk/1024 (From Prescaler) 16MHz/1024 =  15625 Hz
 	TIMSK0 = (1<<OCIE0A); // Habilita el comparador. T=78/15625 Hz ~= 5 ms 
@@ -39,13 +39,11 @@ void SEOSGoToSleep(void){
 }
 
 ISR(TIMER0_COMPA_vect){	
-	static char serialCont=0, taskCount=0;
+	static char taskCount=0;
 	
-	if(++serialCont==1)	{
-		Serial_Flag = 1;
-		serialCont=0;
-	}
-	if(++taskCount==20){
+	Serial_Flag = 1;
+
+	if(++taskCount==60){
 		Task_Flag=1;
 		taskCount=0;
 	}

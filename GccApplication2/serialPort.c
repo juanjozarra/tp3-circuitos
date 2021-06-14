@@ -7,8 +7,9 @@
 
 #include "SerialPort.h"
 
-#define TX_BUFFER_LENGHT 32
-#define RX_BUFFER_LENGHT 32
+
+#define TX_BUFFER_LENGHT 64
+#define RX_BUFFER_LENGHT 64
 
 volatile static unsigned char TXindice_lectura=0, TXindice_escritura=0;
 volatile static unsigned char RXindice_lectura=0, RXindice_escritura=0;
@@ -155,7 +156,7 @@ void SerialPort_Write_Char_To_Buffer (char data)
 void SerialPort_Write_String_To_Buffer(char * STR_PTR)
 {
 	unsigned char i = 0;
-	while (STR_PTR [i] != '\n'){
+	while (STR_PTR [i] != '\0'){
 		SerialPort_Write_Char_To_Buffer(STR_PTR[i]);
 		i++;
 	}
@@ -164,26 +165,29 @@ void SerialPort_Write_String_To_Buffer(char * STR_PTR)
 void SerialPort_Send_Char(char dato)
 {
 	SerialPort_Wait_For_TX_Buffer_Free();
-	SerialPort_Send_Data(dato);
+		SerialPort_Send_Data(dato);
 }
 
 void SerialPort_Update(void)
 {
-	static char key;
+	
 	
 	if (UCSR0A & (1<<RXC0)) {  //Byte recibido. Escribir byte en el buffer de entrada
 		if(RXindice_escritura < RX_BUFFER_LENGHT){
 			RX_BUFFER[RXindice_escritura] = UDR0; //guardar dato en el buffer
-			RXindice_escritura++;			
-		}			
+			RXindice_escritura++;
+		}
 	}
-	//Hay byte en el buffer TX para transmitir?
+	
+		//Hay byte en el buffer TX para transmitir?
 	if (TXindice_lectura < TXindice_escritura){
 		SerialPort_Send_Char( TX_BUFFER[TXindice_lectura]);
 		TXindice_lectura++;
 	} else { //No hay datos disponibles para enviar
 		TXindice_lectura = 0;
-		RXindice_escritura = 0;
+		TXindice_escritura = 0;
 	}
+	
+	
 	
 }

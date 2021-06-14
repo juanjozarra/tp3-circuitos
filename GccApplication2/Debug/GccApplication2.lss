@@ -3,31 +3,31 @@ GccApplication2.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         000000a2  00800100  0000023a  000002ce  2**0
+  0 .data         000000c0  00800100  00000252  000002e6  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000023a  00000000  00000000  00000094  2**1
+  1 .text         00000252  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000027  008001a2  008001a2  00000370  2**0
+  2 .bss          00000048  008001c0  008001c0  000003a6  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000370  2**0
+  3 .comment      00000030  00000000  00000000  000003a6  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000003a0  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000003d8  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000120  00000000  00000000  000003e0  2**0
+  5 .debug_aranges 00000120  00000000  00000000  00000418  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000d8f  00000000  00000000  00000500  2**0
+  6 .debug_info   00000daf  00000000  00000000  00000538  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000008a7  00000000  00000000  0000128f  2**0
+  7 .debug_abbrev 000008f9  00000000  00000000  000012e7  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000006e8  00000000  00000000  00001b36  2**0
+  8 .debug_line   00000704  00000000  00000000  00001be0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000244  00000000  00000000  00002220  2**2
+  9 .debug_frame  00000244  00000000  00000000  000022e4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000641  00000000  00000000  00002464  2**0
+ 10 .debug_str    0000063e  00000000  00000000  00002528  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000003eb  00000000  00000000  00002aa5  2**0
+ 11 .debug_loc    000003eb  00000000  00000000  00002b66  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000000e0  00000000  00000000  00002e90  2**0
+ 12 .debug_ranges 000000e0  00000000  00000000  00002f51  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -47,7 +47,7 @@ Disassembly of section .text:
   2c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   30:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   34:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-  38:	0c 94 86 00 	jmp	0x10c	; 0x10c <__vector_14>
+  38:	0c 94 9a 00 	jmp	0x134	; 0x134 <__vector_14>
   3c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   40:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   44:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
@@ -72,18 +72,18 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	ea e3       	ldi	r30, 0x3A	; 58
+  7a:	e2 e5       	ldi	r30, 0x52	; 82
   7c:	f2 e0       	ldi	r31, 0x02	; 2
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
   82:	0d 92       	st	X+, r0
-  84:	a2 3a       	cpi	r26, 0xA2	; 162
+  84:	a0 3c       	cpi	r26, 0xC0	; 192
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
 
 0000008a <__do_clear_bss>:
-  8a:	21 e0       	ldi	r18, 0x01	; 1
-  8c:	a2 ea       	ldi	r26, 0xA2	; 162
+  8a:	22 e0       	ldi	r18, 0x02	; 2
+  8c:	a0 ec       	ldi	r26, 0xC0	; 192
   8e:	b1 e0       	ldi	r27, 0x01	; 1
   90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
 
@@ -91,303 +91,316 @@ Disassembly of section .text:
   92:	1d 92       	st	X+, r1
 
 00000094 <.do_clear_bss_start>:
-  94:	a9 3c       	cpi	r26, 0xC9	; 201
+  94:	a8 30       	cpi	r26, 0x08	; 8
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
-  9a:	0e 94 5d 00 	call	0xba	; 0xba <main>
-  9e:	0c 94 1b 01 	jmp	0x236	; 0x236 <_exit>
+  9a:	0e 94 71 00 	call	0xe2	; 0xe2 <main>
+  9e:	0c 94 27 01 	jmp	0x24e	; 0x24e <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000a6 <Menu_init>:
+volatile unsigned char print_Menu = 0;
 
-#include "menu.h"
-#include "serialPort.h"
+char msg [3][64]  = {{"Generador de seniales digitales programable.\r\0"},{"Ingrese frecuencia entre 100 y 10000Hz\r\0"},{"ON: para encender.\rOFF: para apagar.\rRST: para reiniciar.\r\0"}};
 
 void Menu_init(void){
-	SerialPort_Write_String_To_Buffer("Generador de seniales digitales programable\n\rIngrese frecuencia entre 100 y 10000Hz\n\rON: para encender, OFF para apagar, RST para reiniciar");
-  a6:	80 e0       	ldi	r24, 0x00	; 0
-  a8:	91 e0       	ldi	r25, 0x01	; 1
-  aa:	0e 94 d5 00 	call	0x1aa	; 0x1aa <SerialPort_Write_String_To_Buffer>
-  ae:	08 95       	ret
+	print_Menu = 1;
+  a6:	81 e0       	ldi	r24, 0x01	; 1
+  a8:	80 93 c1 01 	sts	0x01C1, r24	; 0x8001c1 <print_Menu>
+  ac:	08 95       	ret
 
-000000b0 <Menu_Update>:
+000000ae <Menu_Update>:
 }
 
 void Menu_Update(void){
-	SerialPort_Write_String_To_Buffer("n\r\Hola, esto funciona");
-  b0:	8c e8       	ldi	r24, 0x8C	; 140
-  b2:	91 e0       	ldi	r25, 0x01	; 1
-  b4:	0e 94 d5 00 	call	0x1aa	; 0x1aa <SerialPort_Write_String_To_Buffer>
-  b8:	08 95       	ret
+		if(print_Menu){
+  ae:	80 91 c1 01 	lds	r24, 0x01C1	; 0x8001c1 <print_Menu>
+  b2:	88 23       	and	r24, r24
+  b4:	a9 f0       	breq	.+42     	; 0xe0 <Menu_Update+0x32>
+			static unsigned char step = 0;
+			SerialPort_Write_String_To_Buffer(msg[step]);
+  b6:	80 91 c0 01 	lds	r24, 0x01C0	; 0x8001c0 <__data_end>
+  ba:	20 e4       	ldi	r18, 0x40	; 64
+  bc:	82 9f       	mul	r24, r18
+  be:	c0 01       	movw	r24, r0
+  c0:	11 24       	eor	r1, r1
+  c2:	80 50       	subi	r24, 0x00	; 0
+  c4:	9f 4f       	sbci	r25, 0xFF	; 255
+  c6:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <SerialPort_Write_String_To_Buffer>
+			step++;
+  ca:	80 91 c0 01 	lds	r24, 0x01C0	; 0x8001c0 <__data_end>
+  ce:	8f 5f       	subi	r24, 0xFF	; 255
+  d0:	80 93 c0 01 	sts	0x01C0, r24	; 0x8001c0 <__data_end>
+			if(step==3) {step = 0;
+  d4:	83 30       	cpi	r24, 0x03	; 3
+  d6:	21 f4       	brne	.+8      	; 0xe0 <Menu_Update+0x32>
+  d8:	10 92 c0 01 	sts	0x01C0, r1	; 0x8001c0 <__data_end>
+			print_Menu =0;
+  dc:	10 92 c1 01 	sts	0x01C1, r1	; 0x8001c1 <print_Menu>
+  e0:	08 95       	ret
 
-000000ba <main>:
+000000e2 <main>:
 #include "menu.h"
 #define BR9600 (0x67)	// 0x67=103 configura BAUDRATE=9600@16MHz
 
 int main(void)
 {
 	SerialPort_Init(BR9600); 		// Inicializo formato 8N1 y BAUDRATE = 9600bps
-  ba:	87 e6       	ldi	r24, 0x67	; 103
-  bc:	0e 94 a9 00 	call	0x152	; 0x152 <SerialPort_Init>
+  e2:	87 e6       	ldi	r24, 0x67	; 103
+  e4:	0e 94 b5 00 	call	0x16a	; 0x16a <SerialPort_Init>
 	SerialPort_TX_Enable();			// Activo el Transmisor del Puerto Serie
-  c0:	0e 94 b1 00 	call	0x162	; 0x162 <SerialPort_TX_Enable>
+  e8:	0e 94 bd 00 	call	0x17a	; 0x17a <SerialPort_TX_Enable>
 	SerialPort_RX_Enable();			// Activo el Receptor del Puerto Serie
-  c4:	0e 94 b7 00 	call	0x16e	; 0x16e <SerialPort_RX_Enable>
+  ec:	0e 94 c3 00 	call	0x186	; 0x186 <SerialPort_RX_Enable>
 	Menu_init();
-  c8:	0e 94 53 00 	call	0xa6	; 0xa6 <Menu_init>
+  f0:	0e 94 53 00 	call	0xa6	; 0xa6 <Menu_init>
 	SEOSTimer0Init();
-  cc:	0e 94 6c 00 	call	0xd8	; 0xd8 <SEOSTimer0Init>
+  f4:	0e 94 80 00 	call	0x100	; 0x100 <SEOSTimer0Init>
 	sei();
-  d0:	78 94       	sei
+  f8:	78 94       	sei
 	//Aca deberia iniciar en OFF el generador
 
 
 	while(1)
 	{		
 		SEOSDispatcherTasks();
-  d2:	0e 94 75 00 	call	0xea	; 0xea <SEOSDispatcherTasks>
-  d6:	fd cf       	rjmp	.-6      	; 0xd2 <main+0x18>
+  fa:	0e 94 89 00 	call	0x112	; 0x112 <SEOSDispatcherTasks>
+  fe:	fd cf       	rjmp	.-6      	; 0xfa <main+0x18>
 
-000000d8 <SEOSTimer0Init>:
+00000100 <SEOSTimer0Init>:
 		SerialPort_Update(); //driver UART
 		Serial_Flag = 0;
 	}	
 }
 
 void SEOSGoToSleep(void){
-  d8:	8e e4       	ldi	r24, 0x4E	; 78
-  da:	87 bd       	out	0x27, r24	; 39
-  dc:	82 e0       	ldi	r24, 0x02	; 2
-  de:	84 bd       	out	0x24, r24	; 36
-  e0:	95 e0       	ldi	r25, 0x05	; 5
-  e2:	95 bd       	out	0x25, r25	; 37
-  e4:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__TEXT_REGION_LENGTH__+0x7f806e>
-  e8:	08 95       	ret
+ 100:	8d e4       	ldi	r24, 0x4D	; 77
+ 102:	87 bd       	out	0x27, r24	; 39
+ 104:	82 e0       	ldi	r24, 0x02	; 2
+ 106:	84 bd       	out	0x24, r24	; 36
+ 108:	95 e0       	ldi	r25, 0x05	; 5
+ 10a:	95 bd       	out	0x25, r25	; 37
+ 10c:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__TEXT_REGION_LENGTH__+0x7f806e>
+ 110:	08 95       	ret
 
-000000ea <SEOSDispatcherTasks>:
-  ea:	80 91 a5 01 	lds	r24, 0x01A5	; 0x8001a5 <Task_Flag>
-  ee:	88 23       	and	r24, r24
-  f0:	21 f0       	breq	.+8      	; 0xfa <SEOSDispatcherTasks+0x10>
-  f2:	0e 94 58 00 	call	0xb0	; 0xb0 <Menu_Update>
-  f6:	10 92 a5 01 	sts	0x01A5, r1	; 0x8001a5 <Task_Flag>
-  fa:	80 91 a4 01 	lds	r24, 0x01A4	; 0x8001a4 <Serial_Flag>
-  fe:	88 23       	and	r24, r24
- 100:	21 f0       	breq	.+8      	; 0x10a <SEOSDispatcherTasks+0x20>
- 102:	0e 94 f1 00 	call	0x1e2	; 0x1e2 <SerialPort_Update>
- 106:	10 92 a4 01 	sts	0x01A4, r1	; 0x8001a4 <Serial_Flag>
- 10a:	08 95       	ret
+00000112 <SEOSDispatcherTasks>:
+ 112:	80 91 c4 01 	lds	r24, 0x01C4	; 0x8001c4 <Task_Flag>
+ 116:	88 23       	and	r24, r24
+ 118:	21 f0       	breq	.+8      	; 0x122 <SEOSDispatcherTasks+0x10>
+ 11a:	0e 94 57 00 	call	0xae	; 0xae <Menu_Update>
+ 11e:	10 92 c4 01 	sts	0x01C4, r1	; 0x8001c4 <Task_Flag>
+ 122:	80 91 c3 01 	lds	r24, 0x01C3	; 0x8001c3 <Serial_Flag>
+ 126:	88 23       	and	r24, r24
+ 128:	21 f0       	breq	.+8      	; 0x132 <SEOSDispatcherTasks+0x20>
+ 12a:	0e 94 fd 00 	call	0x1fa	; 0x1fa <SerialPort_Update>
+ 12e:	10 92 c3 01 	sts	0x01C3, r1	; 0x8001c3 <Serial_Flag>
+ 132:	08 95       	ret
 
-0000010c <__vector_14>:
+00000134 <__vector_14>:
 	//PONER EN IDLE
 }
 
 ISR(TIMER0_COMPA_vect){	
- 10c:	1f 92       	push	r1
- 10e:	0f 92       	push	r0
- 110:	0f b6       	in	r0, 0x3f	; 63
- 112:	0f 92       	push	r0
- 114:	11 24       	eor	r1, r1
- 116:	8f 93       	push	r24
-	static char serialCont=0, taskCount=0;
+ 134:	1f 92       	push	r1
+ 136:	0f 92       	push	r0
+ 138:	0f b6       	in	r0, 0x3f	; 63
+ 13a:	0f 92       	push	r0
+ 13c:	11 24       	eor	r1, r1
+ 13e:	8f 93       	push	r24
+	static char taskCount=0;
 	
-	if(++serialCont==1)	{
- 118:	80 91 a3 01 	lds	r24, 0x01A3	; 0x8001a3 <serialCont.1664>
- 11c:	8f 5f       	subi	r24, 0xFF	; 255
- 11e:	80 93 a3 01 	sts	0x01A3, r24	; 0x8001a3 <serialCont.1664>
- 122:	81 30       	cpi	r24, 0x01	; 1
- 124:	21 f4       	brne	.+8      	; 0x12e <__vector_14+0x22>
-		Serial_Flag = 1;
- 126:	80 93 a4 01 	sts	0x01A4, r24	; 0x8001a4 <Serial_Flag>
-		serialCont=0;
- 12a:	10 92 a3 01 	sts	0x01A3, r1	; 0x8001a3 <serialCont.1664>
-	}
-	if(++taskCount==20){
- 12e:	80 91 a2 01 	lds	r24, 0x01A2	; 0x8001a2 <__data_end>
- 132:	8f 5f       	subi	r24, 0xFF	; 255
- 134:	80 93 a2 01 	sts	0x01A2, r24	; 0x8001a2 <__data_end>
- 138:	84 31       	cpi	r24, 0x14	; 20
- 13a:	29 f4       	brne	.+10     	; 0x146 <__vector_14+0x3a>
+	Serial_Flag = 1;
+ 140:	81 e0       	ldi	r24, 0x01	; 1
+ 142:	80 93 c3 01 	sts	0x01C3, r24	; 0x8001c3 <Serial_Flag>
+
+	if(++taskCount==60){
+ 146:	80 91 c2 01 	lds	r24, 0x01C2	; 0x8001c2 <taskCount.1664>
+ 14a:	8f 5f       	subi	r24, 0xFF	; 255
+ 14c:	80 93 c2 01 	sts	0x01C2, r24	; 0x8001c2 <taskCount.1664>
+ 150:	8c 33       	cpi	r24, 0x3C	; 60
+ 152:	29 f4       	brne	.+10     	; 0x15e <__vector_14+0x2a>
 		Task_Flag=1;
- 13c:	81 e0       	ldi	r24, 0x01	; 1
- 13e:	80 93 a5 01 	sts	0x01A5, r24	; 0x8001a5 <Task_Flag>
+ 154:	81 e0       	ldi	r24, 0x01	; 1
+ 156:	80 93 c4 01 	sts	0x01C4, r24	; 0x8001c4 <Task_Flag>
 		taskCount=0;
- 142:	10 92 a2 01 	sts	0x01A2, r1	; 0x8001a2 <__data_end>
+ 15a:	10 92 c2 01 	sts	0x01C2, r1	; 0x8001c2 <taskCount.1664>
 	}
 }
- 146:	8f 91       	pop	r24
- 148:	0f 90       	pop	r0
- 14a:	0f be       	out	0x3f, r0	; 63
- 14c:	0f 90       	pop	r0
- 14e:	1f 90       	pop	r1
- 150:	18 95       	reti
+ 15e:	8f 91       	pop	r24
+ 160:	0f 90       	pop	r0
+ 162:	0f be       	out	0x3f, r0	; 63
+ 164:	0f 90       	pop	r0
+ 166:	1f 90       	pop	r1
+ 168:	18 95       	reti
 
-00000152 <SerialPort_Init>:
+0000016a <SerialPort_Init>:
 	for(i=j;i<5;i++)
 	{
 	SerialPort_Wait_For_TX_Buffer_Free();
 	SerialPort_Send_Data('0'+str[i]);
 	}
 }
- 152:	10 92 c1 00 	sts	0x00C1, r1	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
- 156:	96 e0       	ldi	r25, 0x06	; 6
- 158:	90 93 c2 00 	sts	0x00C2, r25	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7f80c2>
- 15c:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
- 160:	08 95       	ret
-
-00000162 <SerialPort_TX_Enable>:
- 162:	e1 ec       	ldi	r30, 0xC1	; 193
- 164:	f0 e0       	ldi	r31, 0x00	; 0
- 166:	80 81       	ld	r24, Z
- 168:	88 60       	ori	r24, 0x08	; 8
- 16a:	80 83       	st	Z, r24
- 16c:	08 95       	ret
-
-0000016e <SerialPort_RX_Enable>:
- 16e:	e1 ec       	ldi	r30, 0xC1	; 193
- 170:	f0 e0       	ldi	r31, 0x00	; 0
- 172:	80 81       	ld	r24, Z
- 174:	80 61       	ori	r24, 0x10	; 16
- 176:	80 83       	st	Z, r24
+ 16a:	10 92 c1 00 	sts	0x00C1, r1	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
+ 16e:	96 e0       	ldi	r25, 0x06	; 6
+ 170:	90 93 c2 00 	sts	0x00C2, r25	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7f80c2>
+ 174:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
  178:	08 95       	ret
 
-0000017a <SerialPort_Wait_For_TX_Buffer_Free>:
- 17a:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
- 17e:	85 ff       	sbrs	r24, 5
- 180:	fc cf       	rjmp	.-8      	; 0x17a <SerialPort_Wait_For_TX_Buffer_Free>
- 182:	08 95       	ret
+0000017a <SerialPort_TX_Enable>:
+ 17a:	e1 ec       	ldi	r30, 0xC1	; 193
+ 17c:	f0 e0       	ldi	r31, 0x00	; 0
+ 17e:	80 81       	ld	r24, Z
+ 180:	88 60       	ori	r24, 0x08	; 8
+ 182:	80 83       	st	Z, r24
+ 184:	08 95       	ret
 
-00000184 <SerialPort_Send_Data>:
- 184:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
- 188:	08 95       	ret
+00000186 <SerialPort_RX_Enable>:
+ 186:	e1 ec       	ldi	r30, 0xC1	; 193
+ 188:	f0 e0       	ldi	r31, 0x00	; 0
+ 18a:	80 81       	ld	r24, Z
+ 18c:	80 61       	ori	r24, 0x10	; 16
+ 18e:	80 83       	st	Z, r24
+ 190:	08 95       	ret
 
-0000018a <SerialPort_Write_Char_To_Buffer>:
+00000192 <SerialPort_Wait_For_TX_Buffer_Free>:
+ 192:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+ 196:	85 ff       	sbrs	r24, 5
+ 198:	fc cf       	rjmp	.-8      	; 0x192 <SerialPort_Wait_For_TX_Buffer_Free>
+ 19a:	08 95       	ret
+
+0000019c <SerialPort_Send_Data>:
+ 19c:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+ 1a0:	08 95       	ret
+
+000001a2 <SerialPort_Write_Char_To_Buffer>:
 //*********
 
 void SerialPort_Write_Char_To_Buffer (char data)
 {
 	//Escribe en el buffer solo si hay espacio
 	if (TXindice_lectura < TX_BUFFER_LENGHT){
- 18a:	90 91 c8 01 	lds	r25, 0x01C8	; 0x8001c8 <TXindice_lectura>
- 18e:	90 32       	cpi	r25, 0x20	; 32
- 190:	58 f4       	brcc	.+22     	; 0x1a8 <SerialPort_Write_Char_To_Buffer+0x1e>
+ 1a2:	90 91 07 02 	lds	r25, 0x0207	; 0x800207 <TXindice_lectura>
+ 1a6:	90 34       	cpi	r25, 0x40	; 64
+ 1a8:	58 f4       	brcc	.+22     	; 0x1c0 <SerialPort_Write_Char_To_Buffer+0x1e>
 		TX_BUFFER[TXindice_escritura]= data;
- 192:	e0 91 c7 01 	lds	r30, 0x01C7	; 0x8001c7 <TXindice_escritura>
- 196:	f0 e0       	ldi	r31, 0x00	; 0
- 198:	ea 55       	subi	r30, 0x5A	; 90
- 19a:	fe 4f       	sbci	r31, 0xFE	; 254
- 19c:	80 83       	st	Z, r24
+ 1aa:	e0 91 06 02 	lds	r30, 0x0206	; 0x800206 <TXindice_escritura>
+ 1ae:	f0 e0       	ldi	r31, 0x00	; 0
+ 1b0:	eb 53       	subi	r30, 0x3B	; 59
+ 1b2:	fe 4f       	sbci	r31, 0xFE	; 254
+ 1b4:	80 83       	st	Z, r24
 		TXindice_escritura++;
- 19e:	80 91 c7 01 	lds	r24, 0x01C7	; 0x8001c7 <TXindice_escritura>
- 1a2:	8f 5f       	subi	r24, 0xFF	; 255
- 1a4:	80 93 c7 01 	sts	0x01C7, r24	; 0x8001c7 <TXindice_escritura>
- 1a8:	08 95       	ret
+ 1b6:	80 91 06 02 	lds	r24, 0x0206	; 0x800206 <TXindice_escritura>
+ 1ba:	8f 5f       	subi	r24, 0xFF	; 255
+ 1bc:	80 93 06 02 	sts	0x0206, r24	; 0x800206 <TXindice_escritura>
+ 1c0:	08 95       	ret
 
-000001aa <SerialPort_Write_String_To_Buffer>:
+000001c2 <SerialPort_Write_String_To_Buffer>:
 	}	
 }
 
 void SerialPort_Write_String_To_Buffer(char * STR_PTR)
 {
- 1aa:	0f 93       	push	r16
- 1ac:	1f 93       	push	r17
- 1ae:	cf 93       	push	r28
- 1b0:	8c 01       	movw	r16, r24
+ 1c2:	0f 93       	push	r16
+ 1c4:	1f 93       	push	r17
+ 1c6:	cf 93       	push	r28
+ 1c8:	8c 01       	movw	r16, r24
 	unsigned char i = 0;
- 1b2:	c0 e0       	ldi	r28, 0x00	; 0
-	while (STR_PTR [i] != '\n'){
- 1b4:	03 c0       	rjmp	.+6      	; 0x1bc <SerialPort_Write_String_To_Buffer+0x12>
+ 1ca:	c0 e0       	ldi	r28, 0x00	; 0
+	while (STR_PTR [i] != '\0'){
+ 1cc:	03 c0       	rjmp	.+6      	; 0x1d4 <SerialPort_Write_String_To_Buffer+0x12>
 		SerialPort_Write_Char_To_Buffer(STR_PTR[i]);
- 1b6:	0e 94 c5 00 	call	0x18a	; 0x18a <SerialPort_Write_Char_To_Buffer>
+ 1ce:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <SerialPort_Write_Char_To_Buffer>
 		i++;
- 1ba:	cf 5f       	subi	r28, 0xFF	; 255
+ 1d2:	cf 5f       	subi	r28, 0xFF	; 255
 }
 
 void SerialPort_Write_String_To_Buffer(char * STR_PTR)
 {
 	unsigned char i = 0;
-	while (STR_PTR [i] != '\n'){
- 1bc:	f8 01       	movw	r30, r16
- 1be:	ec 0f       	add	r30, r28
- 1c0:	f1 1d       	adc	r31, r1
- 1c2:	80 81       	ld	r24, Z
- 1c4:	8a 30       	cpi	r24, 0x0A	; 10
- 1c6:	b9 f7       	brne	.-18     	; 0x1b6 <SerialPort_Write_String_To_Buffer+0xc>
+	while (STR_PTR [i] != '\0'){
+ 1d4:	f8 01       	movw	r30, r16
+ 1d6:	ec 0f       	add	r30, r28
+ 1d8:	f1 1d       	adc	r31, r1
+ 1da:	80 81       	ld	r24, Z
+ 1dc:	81 11       	cpse	r24, r1
+ 1de:	f7 cf       	rjmp	.-18     	; 0x1ce <SerialPort_Write_String_To_Buffer+0xc>
 		SerialPort_Write_Char_To_Buffer(STR_PTR[i]);
 		i++;
 	}
 }
- 1c8:	cf 91       	pop	r28
- 1ca:	1f 91       	pop	r17
- 1cc:	0f 91       	pop	r16
- 1ce:	08 95       	ret
+ 1e0:	cf 91       	pop	r28
+ 1e2:	1f 91       	pop	r17
+ 1e4:	0f 91       	pop	r16
+ 1e6:	08 95       	ret
 
-000001d0 <SerialPort_Send_Char>:
+000001e8 <SerialPort_Send_Char>:
 
 void SerialPort_Send_Char(char dato)
 {
- 1d0:	cf 93       	push	r28
- 1d2:	c8 2f       	mov	r28, r24
+ 1e8:	cf 93       	push	r28
+ 1ea:	c8 2f       	mov	r28, r24
 	SerialPort_Wait_For_TX_Buffer_Free();
- 1d4:	0e 94 bd 00 	call	0x17a	; 0x17a <SerialPort_Wait_For_TX_Buffer_Free>
-	SerialPort_Send_Data(dato);
- 1d8:	8c 2f       	mov	r24, r28
- 1da:	0e 94 c2 00 	call	0x184	; 0x184 <SerialPort_Send_Data>
+ 1ec:	0e 94 c9 00 	call	0x192	; 0x192 <SerialPort_Wait_For_TX_Buffer_Free>
+		SerialPort_Send_Data(dato);
+ 1f0:	8c 2f       	mov	r24, r28
+ 1f2:	0e 94 ce 00 	call	0x19c	; 0x19c <SerialPort_Send_Data>
 }
- 1de:	cf 91       	pop	r28
- 1e0:	08 95       	ret
+ 1f6:	cf 91       	pop	r28
+ 1f8:	08 95       	ret
 
-000001e2 <SerialPort_Update>:
+000001fa <SerialPort_Update>:
 
 void SerialPort_Update(void)
 {
-	static char key;
+	
 	
 	if (UCSR0A & (1<<RXC0)) {  //Byte recibido. Escribir byte en el buffer de entrada
- 1e2:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
- 1e6:	88 23       	and	r24, r24
- 1e8:	6c f4       	brge	.+26     	; 0x204 <SerialPort_Update+0x22>
+ 1fa:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+ 1fe:	88 23       	and	r24, r24
+ 200:	6c f4       	brge	.+26     	; 0x21c <SerialPort_Update+0x22>
 		if(RXindice_escritura < RX_BUFFER_LENGHT){
- 1ea:	80 91 c6 01 	lds	r24, 0x01C6	; 0x8001c6 <RXindice_escritura>
- 1ee:	80 32       	cpi	r24, 0x20	; 32
- 1f0:	48 f4       	brcc	.+18     	; 0x204 <SerialPort_Update+0x22>
+ 202:	80 91 05 02 	lds	r24, 0x0205	; 0x800205 <RXindice_escritura>
+ 206:	80 34       	cpi	r24, 0x40	; 64
+ 208:	48 f4       	brcc	.+18     	; 0x21c <SerialPort_Update+0x22>
 			RX_BUFFER[RXindice_escritura] = UDR0; //guardar dato en el buffer
- 1f2:	80 91 c6 01 	lds	r24, 0x01C6	; 0x8001c6 <RXindice_escritura>
- 1f6:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
-			RXindice_escritura++;			
- 1fa:	80 91 c6 01 	lds	r24, 0x01C6	; 0x8001c6 <RXindice_escritura>
- 1fe:	8f 5f       	subi	r24, 0xFF	; 255
- 200:	80 93 c6 01 	sts	0x01C6, r24	; 0x8001c6 <RXindice_escritura>
-		}			
+ 20a:	80 91 05 02 	lds	r24, 0x0205	; 0x800205 <RXindice_escritura>
+ 20e:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+			RXindice_escritura++;
+ 212:	80 91 05 02 	lds	r24, 0x0205	; 0x800205 <RXindice_escritura>
+ 216:	8f 5f       	subi	r24, 0xFF	; 255
+ 218:	80 93 05 02 	sts	0x0205, r24	; 0x800205 <RXindice_escritura>
+		}
 	}
-	//Hay byte en el buffer TX para transmitir?
+	
+		//Hay byte en el buffer TX para transmitir?
 	if (TXindice_lectura < TXindice_escritura){
- 204:	90 91 c8 01 	lds	r25, 0x01C8	; 0x8001c8 <TXindice_lectura>
- 208:	80 91 c7 01 	lds	r24, 0x01C7	; 0x8001c7 <TXindice_escritura>
- 20c:	98 17       	cp	r25, r24
- 20e:	70 f4       	brcc	.+28     	; 0x22c <SerialPort_Update+0x4a>
+ 21c:	90 91 07 02 	lds	r25, 0x0207	; 0x800207 <TXindice_lectura>
+ 220:	80 91 06 02 	lds	r24, 0x0206	; 0x800206 <TXindice_escritura>
+ 224:	98 17       	cp	r25, r24
+ 226:	70 f4       	brcc	.+28     	; 0x244 <SerialPort_Update+0x4a>
 		SerialPort_Send_Char( TX_BUFFER[TXindice_lectura]);
- 210:	e0 91 c8 01 	lds	r30, 0x01C8	; 0x8001c8 <TXindice_lectura>
- 214:	f0 e0       	ldi	r31, 0x00	; 0
- 216:	ea 55       	subi	r30, 0x5A	; 90
- 218:	fe 4f       	sbci	r31, 0xFE	; 254
- 21a:	80 81       	ld	r24, Z
- 21c:	0e 94 e8 00 	call	0x1d0	; 0x1d0 <SerialPort_Send_Char>
+ 228:	e0 91 07 02 	lds	r30, 0x0207	; 0x800207 <TXindice_lectura>
+ 22c:	f0 e0       	ldi	r31, 0x00	; 0
+ 22e:	eb 53       	subi	r30, 0x3B	; 59
+ 230:	fe 4f       	sbci	r31, 0xFE	; 254
+ 232:	80 81       	ld	r24, Z
+ 234:	0e 94 f4 00 	call	0x1e8	; 0x1e8 <SerialPort_Send_Char>
 		TXindice_lectura++;
- 220:	80 91 c8 01 	lds	r24, 0x01C8	; 0x8001c8 <TXindice_lectura>
- 224:	8f 5f       	subi	r24, 0xFF	; 255
- 226:	80 93 c8 01 	sts	0x01C8, r24	; 0x8001c8 <TXindice_lectura>
- 22a:	08 95       	ret
+ 238:	80 91 07 02 	lds	r24, 0x0207	; 0x800207 <TXindice_lectura>
+ 23c:	8f 5f       	subi	r24, 0xFF	; 255
+ 23e:	80 93 07 02 	sts	0x0207, r24	; 0x800207 <TXindice_lectura>
+ 242:	08 95       	ret
 	} else { //No hay datos disponibles para enviar
 		TXindice_lectura = 0;
- 22c:	10 92 c8 01 	sts	0x01C8, r1	; 0x8001c8 <TXindice_lectura>
-		RXindice_escritura = 0;
- 230:	10 92 c6 01 	sts	0x01C6, r1	; 0x8001c6 <RXindice_escritura>
- 234:	08 95       	ret
+ 244:	10 92 07 02 	sts	0x0207, r1	; 0x800207 <TXindice_lectura>
+		TXindice_escritura = 0;
+ 248:	10 92 06 02 	sts	0x0206, r1	; 0x800206 <TXindice_escritura>
+ 24c:	08 95       	ret
 
-00000236 <_exit>:
- 236:	f8 94       	cli
+0000024e <_exit>:
+ 24e:	f8 94       	cli
 
-00000238 <__stop_program>:
- 238:	ff cf       	rjmp	.-2      	; 0x238 <__stop_program>
+00000250 <__stop_program>:
+ 250:	ff cf       	rjmp	.-2      	; 0x250 <__stop_program>
