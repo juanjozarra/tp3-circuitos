@@ -1,0 +1,4 @@
+GCCApplication2/Debug/
+.vs/
+*.pdsprj.*
+*.pdsbak
