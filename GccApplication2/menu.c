@@ -67,12 +67,12 @@ void Menu_Command(){
 			GENERADOR_frec = frec;
 			GENERADOR_refreshFrecuency();
 		}else{
-			SerialPort_Write_String_To_Buffer("Comando No Valido.\r\r");
+			SerialPort_Write_String_To_Buffer("Comando No Valido.\r");
 		}
 		}
 	}	
 	else{
-		SerialPort_Write_String_To_Buffer("Comando No Valido.\r\r");
+		SerialPort_Write_String_To_Buffer("Comando No Valido.\r");
 	}
 	//Reinicializo para el siguiente comando
 	too_long = 0;
