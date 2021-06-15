@@ -504,7 +504,7 @@ END GROUP
  *(.fini0)
                 0x00000510                _etext = .
 
-.data           0x00800100       0xda load address 0x00000510
+.data           0x00800100       0xd8 load address 0x00000510
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -520,53 +520,52 @@ END GROUP
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x008001c4       0x15 menu.o
+                0x008001c4       0x14 menu.o
  *(.gnu.linkonce.r*)
-                0x008001da                . = ALIGN (0x2)
- *fill*         0x008001d9        0x1 
-                0x008001da                _edata = .
-                0x008001da                PROVIDE (__data_end, .)
+                0x008001d8                . = ALIGN (0x2)
+                0x008001d8                _edata = .
+                0x008001d8                PROVIDE (__data_end, .)
 
-.bss            0x008001da       0x90
-                0x008001da                PROVIDE (__bss_start, .)
+.bss            0x008001d8       0x90
+                0x008001d8                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.step.1818
-                0x008001da        0x1 menu.o
- .bss.too_long  0x008001db        0x1 menu.o
+                0x008001d8        0x1 menu.o
+ .bss.too_long  0x008001d9        0x1 menu.o
  .bss.indice_command
-                0x008001dc        0x1 menu.o
- .bss.command   0x008001dd        0x5 menu.o
+                0x008001da        0x1 menu.o
+ .bss.command   0x008001db        0x5 menu.o
  .bss.taskCount.1667
-                0x008001e2        0x1 seos.o
+                0x008001e0        0x1 seos.o
  .bss.Flag_MenuUpdate
-                0x008001e3        0x1 seos.o
+                0x008001e1        0x1 seos.o
  .bss.Flag_UART
-                0x008001e4        0x1 seos.o
+                0x008001e2        0x1 seos.o
  .bss.Flag_PrintMenu
-                0x008001e5        0x1 seos.o
+                0x008001e3        0x1 seos.o
  .bss.RX_BUFFER
-                0x008001e6       0x40 serialPort.o
+                0x008001e4       0x40 serialPort.o
  .bss.TX_BUFFER
-                0x00800226       0x40 serialPort.o
+                0x00800224       0x40 serialPort.o
  .bss.RXindice_escritura
-                0x00800266        0x1 serialPort.o
+                0x00800264        0x1 serialPort.o
  .bss.RXindice_lectura
-                0x00800267        0x1 serialPort.o
+                0x00800265        0x1 serialPort.o
  .bss.TXindice_escritura
-                0x00800268        0x1 serialPort.o
+                0x00800266        0x1 serialPort.o
  .bss.TXindice_lectura
-                0x00800269        0x1 serialPort.o
+                0x00800267        0x1 serialPort.o
  *(COMMON)
-                0x0080026a                PROVIDE (__bss_end, .)
+                0x00800268                PROVIDE (__bss_end, .)
                 0x00000510                __data_load_start = LOADADDR (.data)
-                0x000005ea                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000005e8                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0080026a        0x0
+.noinit         0x00800268        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x0080026a                _end = .
+                0x00800268                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0

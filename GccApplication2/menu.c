@@ -73,31 +73,31 @@ void Menu_Command(){
 		if(command[0]==cmds[0][0]&&command[1]==cmds[0][1]&&command[2]==cmds[0][2]&&command[3]==cmds[0][3]&&command[4]==cmds[0][4]){
 			GENERADOR_turnOn();
 		} else //Si ingresó OFF: apagamos el generador de señal
-		if(command[0]==cmds[1][0]&&command[1]==cmds[1][1]&&command[2]==cmds[1][2]&&command[3]==cmds[1][3]&&command[4]==cmds[1][4]){
-			GENERADOR_turnOff();
-		} else
-		//Si ingresó RST: apagamos el generador de señal, seteamos la frecuencia por default e indicamos a la variable print_Menu que se debe 
-		//volver a imprimir el menú
-		if(command[0]==cmds[2][0]&&command[1]==cmds[2][1]&&command[2]==cmds[2][2]&&command[3]==cmds[2][3]&&command[4]==cmds[2][4]){ 
-			GENERADOR_turnOff();
-			GENERADOR_frec = 100;		
-			print_Menu = 1;						
-		} else{
-			//Si ingresó un valor numerico para representar la frecuencia, chequeamos que este dentro de los valores validos y procedemos a 
-			//asignar el valor de frecuencia a la variable GENERADOR_frec y actualizamos la frecuencia del Generador. 
-		unsigned long frec = atoi(command);
-		if((frec>=100)&&(frec<=10000)){
-			GENERADOR_frec = frec;
-			GENERADOR_refreshFrecuency();
-		}else{
-			//Caso negativo a todo lo evaluado anteriormente, le comunicamos al UART el mensaje "Comando no valido" para que lo imprima en consola
-			SerialPort_Write_String_To_Buffer("Comando No Valido.\r\r");
-		}
+			if(command[0]==cmds[1][0]&&command[1]==cmds[1][1]&&command[2]==cmds[1][2]&&command[3]==cmds[1][3]&&command[4]==cmds[1][4]){
+				GENERADOR_turnOff();
+			} else
+				//Si ingresó RST: apagamos el generador de señal, seteamos la frecuencia por default e indicamos a la variable print_Menu que se debe 
+				//volver a imprimir el menú
+				if(command[0]==cmds[2][0]&&command[1]==cmds[2][1]&&command[2]==cmds[2][2]&&command[3]==cmds[2][3]&&command[4]==cmds[2][4]){ 
+					GENERADOR_turnOff();
+					GENERADOR_frec = 100;		
+					print_Menu = 1;						
+				} else{
+					//Si ingresó un valor numerico para representar la frecuencia, chequeamos que este dentro de los valores validos y procedemos a 
+					//asignar el valor de frecuencia a la variable GENERADOR_frec y actualizamos la frecuencia del Generador. 
+					unsigned long frec = atoi(command);
+					if((frec>=100)&&(frec<=10000)){
+						GENERADOR_frec = frec;
+						GENERADOR_refreshFrecuency();
+					}else{
+						//Caso negativo a todo lo evaluado anteriormente, le comunicamos al UART el mensaje "Comando no valido" para que lo imprima en consola
+						SerialPort_Write_String_To_Buffer("Comando No Valido.\r");
+					}
 		}
 	}	
 	else{
 		//Si el comando se encuentra fuera de rango, le transmitimos el mensaje "Comando no valido" al UART para que lo imprima en consola
-		SerialPort_Write_String_To_Buffer("Comando No Valido.\r\r");
+		SerialPort_Write_String_To_Buffer("Comando No Valido.\r");
 	}
 	//Reinicializo para el siguiente comando
 	too_long = 0;
