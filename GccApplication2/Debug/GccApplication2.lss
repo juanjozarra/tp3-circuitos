@@ -19,15 +19,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   7 .debug_abbrev 00000a07  00000000  00000000  000018f0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000009fc  00000000  00000000  000022f7  2**0
+  8 .debug_line   000009fd  00000000  00000000  000022f7  2**0
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  000002b8  00000000  00000000  00002cf4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000720  00000000  00000000  00002fac  2**0
+ 10 .debug_str    00000763  00000000  00000000  00002fac  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000004b5  00000000  00000000  000036cc  2**0
+ 11 .debug_loc    000004b5  00000000  00000000  0000370f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000110  00000000  00000000  00003b81  2**0
+ 12 .debug_ranges 00000110  00000000  00000000  00003bc4  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -101,10 +101,10 @@ Disassembly of section .text:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000a6 <Menu_Print>:
-static unsigned char indice_command=0;
-static unsigned char too_long = 0;
-static char cmds [3][5] = {{"ON"},{"OFF"},{"RST"}};
-
+		Para mostrar el menu nos apoyamos en una variable de tipo static unsigned char llamada Step (representa un paso), la cual indica la "frase" a mostrar
+		en el menú. Una vez que se muestran las 3 frases en el menú, se resetea la variable print_Menu en 0 y el contador de pasos en 0.
+		Esto para que la proxima vez que se necesite mostrar el menú, las variables se encuentren iniciadas en los valores correctos para el
+		funcionamiento de Menu_Print(). */
 void Menu_Print(void){
 		if(print_Menu){
   a6:	80 91 c0 01 	lds	r24, 0x01C0	; 0x8001c0 <print_Menu>
@@ -133,15 +133,16 @@ void Menu_Print(void){
   d8:	08 95       	ret
 
 000000da <Menu_Command>:
-		}
-	}
-}
-
+		En el caso de que se encuentre dentro del rango, lo que hacemos es comparar el comando ingresado por el usuario con los comandos
+		válidos. Los mismos se encuentran almacenados en la matriz cmds, por lo cual comparamos caracter por caracter si corresponde a uno de ellos.
+		Una vez que se chequee la validez y se corresponda con algun comando valido, llamamos a la funcion del generador que corresponda.
+		*/
 void Menu_Command(){
 	if(!too_long){
   da:	80 91 db 01 	lds	r24, 0x01DB	; 0x8001db <too_long>
   de:	81 11       	cpse	r24, r1
   e0:	68 c0       	rjmp	.+208    	; 0x1b2 <Menu_Command+0xd8>
+		//Si ingresó ON: encendemos el generador de señal
 		if(command[0]==cmds[0][0]&&command[1]==cmds[0][1]&&command[2]==cmds[0][2]&&command[3]==cmds[0][3]&&command[4]==cmds[0][4]){
   e2:	80 91 dd 01 	lds	r24, 0x01DD	; 0x8001dd <command>
   e6:	8f 34       	cpi	r24, 0x4F	; 79
@@ -161,7 +162,7 @@ void Menu_Command(){
 			GENERADOR_turnOn();
  10a:	0e 94 2d 01 	call	0x25a	; 0x25a <GENERADOR_turnOn>
  10e:	55 c0       	rjmp	.+170    	; 0x1ba <Menu_Command+0xe0>
-		} else
+		} else //Si ingresó OFF: apagamos el generador de señal
 		if(command[0]==cmds[1][0]&&command[1]==cmds[1][1]&&command[2]==cmds[1][2]&&command[3]==cmds[1][3]&&command[4]==cmds[1][4]){
  110:	8f 34       	cpi	r24, 0x4F	; 79
  112:	99 f4       	brne	.+38     	; 0x13a <Menu_Command+0x60>
@@ -181,7 +182,9 @@ void Menu_Command(){
  134:	0e 94 15 01 	call	0x22a	; 0x22a <GENERADOR_turnOff>
  138:	40 c0       	rjmp	.+128    	; 0x1ba <Menu_Command+0xe0>
 		} else
-		if(command[0]==cmds[2][0]&&command[1]==cmds[2][1]&&command[2]==cmds[2][2]&&command[3]==cmds[2][3]&&command[4]==cmds[2][4]){
+		//Si ingresó RST: apagamos el generador de señal, seteamos la frecuencia por default e indicamos a la variable print_Menu que se debe 
+		//volver a imprimir el menú
+		if(command[0]==cmds[2][0]&&command[1]==cmds[2][1]&&command[2]==cmds[2][2]&&command[3]==cmds[2][3]&&command[4]==cmds[2][4]){ 
  13a:	82 35       	cpi	r24, 0x52	; 82
  13c:	e1 f4       	brne	.+56     	; 0x176 <Menu_Command+0x9c>
  13e:	80 91 de 01 	lds	r24, 0x01DE	; 0x8001de <command+0x1>
@@ -208,6 +211,8 @@ void Menu_Command(){
  170:	80 93 c0 01 	sts	0x01C0, r24	; 0x8001c0 <print_Menu>
  174:	22 c0       	rjmp	.+68     	; 0x1ba <Menu_Command+0xe0>
 		} else{
+			//Si ingresó un valor numerico para representar la frecuencia, chequeamos que este dentro de los valores validos y procedemos a 
+			//asignar el valor de frecuencia a la variable GENERADOR_frec y actualizamos la frecuencia del Generador. 
 		unsigned long frec = atoi(command);
  176:	8d ed       	ldi	r24, 0xDD	; 221
  178:	91 e0       	ldi	r25, 0x01	; 1
@@ -234,6 +239,7 @@ void Menu_Command(){
  1a2:	0e 94 1a 01 	call	0x234	; 0x234 <GENERADOR_refreshFrecuency>
  1a6:	09 c0       	rjmp	.+18     	; 0x1ba <Menu_Command+0xe0>
 		}else{
+			//Caso negativo a todo lo evaluado anteriormente, le comunicamos al UART el mensaje "Comando no valido" para que lo imprima en consola
 			SerialPort_Write_String_To_Buffer("Comando No Valido.\r\r");
  1a8:	84 ec       	ldi	r24, 0xC4	; 196
  1aa:	91 e0       	ldi	r25, 0x01	; 1
@@ -243,6 +249,7 @@ void Menu_Command(){
 		}
 	}	
 	else{
+		//Si el comando se encuentra fuera de rango, le transmitimos el mensaje "Comando no valido" al UART para que lo imprima en consola
 		SerialPort_Write_String_To_Buffer("Comando No Valido.\r\r");
  1b2:	84 ec       	ldi	r24, 0xC4	; 196
  1b4:	91 e0       	ldi	r25, 0x01	; 1
@@ -251,7 +258,6 @@ void Menu_Command(){
 	//Reinicializo para el siguiente comando
 	too_long = 0;
  1ba:	10 92 db 01 	sts	0x01DB, r1	; 0x8001db <too_long>
-	//strcpy(command,"\0\0\0\0\0");
 	command[0] = 0;
  1be:	ed ed       	ldi	r30, 0xDD	; 221
  1c0:	f1 e0       	ldi	r31, 0x01	; 1
@@ -269,11 +275,11 @@ void Menu_Command(){
  1d0:	08 95       	ret
 
 000001d2 <Menu_Update>:
-			print_Menu =0;
-			}
-		}
-}
-
+		Leemos un caracter, si no corresponde a la tecla "Enter" seguimos procesando los caracteres ingresados hasta llenar (o no) el vector que representa al comando.
+		Si ingresa más de 5 caracteres ya pasa a ser un comando NO valido debido a que la cantidad de caracteres maximo de un comando valido es 5,
+		esto es debido a que la frecuencia maxima valida es 10.000 que posee 5 caracteres, los demas comandos representan longitudes menores. 
+		Una vez presionada la tecla Enter por parte del usuario, pasamos a procesar el comando. De esto se encarga la funcion Menu_Command() detallada a continuacion.
+		*/
 void Menu_Update(){
  1d2:	cf 93       	push	r28
  1d4:	df 93       	push	r29
@@ -331,22 +337,11 @@ void Menu_Update(){
  228:	08 95       	ret
 
 0000022a <GENERADOR_turnOff>:
-		TCCR1B = (1<<WGM12)|(1<<CS11); //Modo CTC 8 prescaler
-		GENERADOR_refreshFrecuency();
-}
-
-void GENERADOR_turnOff(){
-	TCCR1A = 0;
  22a:	10 92 80 00 	sts	0x0080, r1	; 0x800080 <__TEXT_REGION_LENGTH__+0x7f8080>
-	TCCR1B = 0;	
  22e:	10 92 81 00 	sts	0x0081, r1	; 0x800081 <__TEXT_REGION_LENGTH__+0x7f8081>
  232:	08 95       	ret
 
 00000234 <GENERADOR_refreshFrecuency>:
-}
-
-void GENERADOR_refreshFrecuency (){
-	OCR1A= 1000000/GENERADOR_frec-1;
  234:	20 91 c1 01 	lds	r18, 0x01C1	; 0x8001c1 <GENERADOR_frec>
  238:	30 91 c2 01 	lds	r19, 0x01C2	; 0x8001c2 <GENERADOR_frec+0x1>
  23c:	40 e0       	ldi	r20, 0x00	; 0
@@ -363,21 +358,12 @@ void GENERADOR_refreshFrecuency (){
  258:	08 95       	ret
 
 0000025a <GENERADOR_turnOn>:
-#include <avr/io.h>
-
-volatile unsigned short GENERADOR_frec=100; //Variable global donde se almacena la frecuencia. Por defecto 100.
-
-void GENERADOR_turnOn(){
-		DDRB = (1<<PINB1); //PINB0 SALIDA
  25a:	82 e0       	ldi	r24, 0x02	; 2
  25c:	84 b9       	out	0x04, r24	; 4
-		TCCR1A = (1<<COM1A0); //COM1A TOGGLE
  25e:	80 e4       	ldi	r24, 0x40	; 64
  260:	80 93 80 00 	sts	0x0080, r24	; 0x800080 <__TEXT_REGION_LENGTH__+0x7f8080>
-		TCCR1B = (1<<WGM12)|(1<<CS11); //Modo CTC 8 prescaler
  264:	8a e0       	ldi	r24, 0x0A	; 10
  266:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7f8081>
-		GENERADOR_refreshFrecuency();
  26a:	0e 94 1a 01 	call	0x234	; 0x234 <GENERADOR_refreshFrecuency>
  26e:	08 95       	ret
 
@@ -394,11 +380,10 @@ int main(void)
  276:	0e 94 96 01 	call	0x32c	; 0x32c <SerialPort_TX_Enable>
 	SerialPort_RX_Enable();			// Activo el Receptor del Puerto Serie
  27a:	0e 94 9c 01 	call	0x338	; 0x338 <SerialPort_RX_Enable>
-	SEOSTimer0Init();
+	SEOSTimer0Init();				//Inicializo el timer0
  27e:	0e 94 45 01 	call	0x28a	; 0x28a <SEOSTimer0Init>
-	sei();
+	sei();							//Habilito las interrupciones
  282:	78 94       	sei
-	//Aca deberia iniciar en OFF el generador
 
 
 	while(1)
@@ -408,8 +393,8 @@ int main(void)
  288:	fd cf       	rjmp	.-6      	; 0x284 <main+0x14>
 
 0000028a <SEOSTimer0Init>:
-		Menu_Update();
-		Reader_Flag = 0;
+		Menu_Update(); //aplicacion actualizar el menu
+		Flag_MenuUpdate = 0;
 	}	
 }
 
@@ -424,27 +409,29 @@ void SEOSGoToSleep(void){
  29a:	08 95       	ret
 
 0000029c <SEOSDispatcherTasks>:
- 29c:	80 91 e5 01 	lds	r24, 0x01E5	; 0x8001e5 <Task_Flag>
+ 29c:	80 91 e5 01 	lds	r24, 0x01E5	; 0x8001e5 <Flag_PrintMenu>
  2a0:	88 23       	and	r24, r24
  2a2:	21 f0       	breq	.+8      	; 0x2ac <SEOSDispatcherTasks+0x10>
  2a4:	0e 94 53 00 	call	0xa6	; 0xa6 <Menu_Print>
- 2a8:	10 92 e5 01 	sts	0x01E5, r1	; 0x8001e5 <Task_Flag>
- 2ac:	80 91 e4 01 	lds	r24, 0x01E4	; 0x8001e4 <Serial_Flag>
+ 2a8:	10 92 e5 01 	sts	0x01E5, r1	; 0x8001e5 <Flag_PrintMenu>
+ 2ac:	80 91 e4 01 	lds	r24, 0x01E4	; 0x8001e4 <Flag_UART>
  2b0:	88 23       	and	r24, r24
  2b2:	21 f0       	breq	.+8      	; 0x2bc <SEOSDispatcherTasks+0x20>
  2b4:	0e 94 d6 01 	call	0x3ac	; 0x3ac <SerialPort_Update>
- 2b8:	10 92 e4 01 	sts	0x01E4, r1	; 0x8001e4 <Serial_Flag>
- 2bc:	80 91 e3 01 	lds	r24, 0x01E3	; 0x8001e3 <Reader_Flag>
+ 2b8:	10 92 e4 01 	sts	0x01E4, r1	; 0x8001e4 <Flag_UART>
+ 2bc:	80 91 e3 01 	lds	r24, 0x01E3	; 0x8001e3 <Flag_MenuUpdate>
  2c0:	88 23       	and	r24, r24
  2c2:	21 f0       	breq	.+8      	; 0x2cc <SEOSDispatcherTasks+0x30>
  2c4:	0e 94 e9 00 	call	0x1d2	; 0x1d2 <Menu_Update>
- 2c8:	10 92 e3 01 	sts	0x01E3, r1	; 0x8001e3 <Reader_Flag>
+ 2c8:	10 92 e3 01 	sts	0x01E3, r1	; 0x8001e3 <Flag_MenuUpdate>
  2cc:	08 95       	ret
 
 000002ce <__vector_14>:
 	//PONER EN IDLE
 }
 
+
+//Rutinas de servicio de interrupciones
 ISR(TIMER0_COMPA_vect){	
  2ce:	1f 92       	push	r1
  2d0:	0f 92       	push	r0
@@ -454,32 +441,32 @@ ISR(TIMER0_COMPA_vect){
  2d8:	8f 93       	push	r24
 	static char taskCount=0,readerCount=10;
 	
-	Serial_Flag = 1;
+	Flag_UART = 1;
  2da:	81 e0       	ldi	r24, 0x01	; 1
- 2dc:	80 93 e4 01 	sts	0x01E4, r24	; 0x8001e4 <Serial_Flag>
+ 2dc:	80 93 e4 01 	sts	0x01E4, r24	; 0x8001e4 <Flag_UART>
 	
-	if(++readerCount==10){
+	if(++readerCount==10){ //Cada 10 ticks = 50ms, activo el flag MenuUpdate
  2e0:	80 91 c3 01 	lds	r24, 0x01C3	; 0x8001c3 <readerCount.1668>
  2e4:	8f 5f       	subi	r24, 0xFF	; 255
  2e6:	80 93 c3 01 	sts	0x01C3, r24	; 0x8001c3 <readerCount.1668>
  2ea:	8a 30       	cpi	r24, 0x0A	; 10
  2ec:	29 f4       	brne	.+10     	; 0x2f8 <__vector_14+0x2a>
-		Reader_Flag=1;
+		Flag_MenuUpdate=1;
  2ee:	81 e0       	ldi	r24, 0x01	; 1
- 2f0:	80 93 e3 01 	sts	0x01E3, r24	; 0x8001e3 <Reader_Flag>
+ 2f0:	80 93 e3 01 	sts	0x01E3, r24	; 0x8001e3 <Flag_MenuUpdate>
 		readerCount=0;
  2f4:	10 92 c3 01 	sts	0x01C3, r1	; 0x8001c3 <readerCount.1668>
 	}
 
-	if(++taskCount==60){
+	if(++taskCount==60){ //Cada 60 ticks = 300ms , activo el flag PrintMenu
  2f8:	80 91 e2 01 	lds	r24, 0x01E2	; 0x8001e2 <taskCount.1667>
  2fc:	8f 5f       	subi	r24, 0xFF	; 255
  2fe:	80 93 e2 01 	sts	0x01E2, r24	; 0x8001e2 <taskCount.1667>
  302:	8c 33       	cpi	r24, 0x3C	; 60
  304:	29 f4       	brne	.+10     	; 0x310 <__vector_14+0x42>
-		Task_Flag=1;
+		Flag_PrintMenu=1;
  306:	81 e0       	ldi	r24, 0x01	; 1
- 308:	80 93 e5 01 	sts	0x01E5, r24	; 0x8001e5 <Task_Flag>
+ 308:	80 93 e5 01 	sts	0x01E5, r24	; 0x8001e5 <Flag_PrintMenu>
 		taskCount=0;
  30c:	10 92 e2 01 	sts	0x01E2, r1	; 0x8001e2 <taskCount.1667>
 	}
