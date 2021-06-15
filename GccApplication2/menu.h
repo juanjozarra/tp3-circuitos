@@ -12,6 +12,6 @@
 void Menu_options(); //Posiblemente Static
 void Menu_Print();
 void Menu_Update();
-static void Menu_Command();
+ void Menu_Command();
 
 #endif /* INCFILE1_H_ */

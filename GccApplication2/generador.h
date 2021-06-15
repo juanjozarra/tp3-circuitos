@@ -9,8 +9,8 @@
 #ifndef GENERADOR_H_
 #define GENERADOR_H_
 
-void refreshFrecuency ();
-void turnOn();
-void turnOff();
+void GENERADOR_refreshFrecuency ();
+void GENERADOR_turnOn();
+void GENERADOR_turnOff();
 
 #endif /* GENERADOR_H_ */

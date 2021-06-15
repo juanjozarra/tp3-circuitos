@@ -17,7 +17,6 @@ int main(void)
 	SerialPort_Init(BR9600); 		// Inicializo formato 8N1 y BAUDRATE = 9600bps
 	SerialPort_TX_Enable();			// Activo el Transmisor del Puerto Serie
 	SerialPort_RX_Enable();			// Activo el Receptor del Puerto Serie
-	Menu_options();
 	SEOSTimer0Init();
 	sei();
 	//Aca deberia iniciar en OFF el generador
