@@ -1,9 +1,9 @@
 /*
- * serialPort.c
- *
- * Created: 07/10/2020 03:02:18 p. m.
- *  Author: vfperri
- */ 
+* serialPort.c
+*
+* Created: 07/10/2020 03:02:18 p. m.
+*  Author: vfperri
+*/
 
 #include "SerialPort.h"
 
@@ -73,7 +73,7 @@ void SerialPort_Send_String(char * msg){ //msg -> "Hola como andan hoy?" 20 ASCI
 	uint8_t i = 0;
 	//'\0' = 0x00
 	while(msg[i]){ // *(msg+i)
-		SerialPort_Wait_For_TX_Buffer_Free(); //9600bps formato 8N1, 10bits, 10.Tbit=10/9600=1ms 
+		SerialPort_Wait_For_TX_Buffer_Free(); //9600bps formato 8N1, 10bits, 10.Tbit=10/9600=1ms
 		SerialPort_Send_Data(msg[i]);
 		i++;
 	}
@@ -111,11 +111,11 @@ void SerialPort_Send_uint8_t(uint8_t num){
 
 
 /***************************************************************
-	This function writes a integer type value to UART
-	Arguments:
-	1)int val	: Value to print
-	2)unsigned int field_length :total length of field in which the value is printed
-	must be between 1-5 if it is -1 the field length is no of digits in the val
+This function writes a integer type value to UART
+Arguments:
+1)int val	: Value to print
+2)unsigned int field_length :total length of field in which the value is printed
+must be between 1-5 if it is -1 the field length is no of digits in the val
 ****************************************************************/
 void SerialPort_send_int16_t(int val,unsigned int field_length)
 {
@@ -123,23 +123,23 @@ void SerialPort_send_int16_t(int val,unsigned int field_length)
 	int i=4,j=0;
 	while(val)
 	{
-	str[i]=val%10;
-	val=val/10;
-	i--;
+		str[i]=val%10;
+		val=val/10;
+		i--;
 	}
 	if(field_length==-1)
-		while(str[j]==0) j++;
+	while(str[j]==0) j++;
 	else
-		j=5-field_length;
+	j=5-field_length;
 
 	if(val<0) {
 		SerialPort_Wait_For_TX_Buffer_Free();
 		SerialPort_Send_Data('-');
-		}
+	}
 	for(i=j;i<5;i++)
 	{
-	SerialPort_Wait_For_TX_Buffer_Free();
-	SerialPort_Send_Data('0'+str[i]);
+		SerialPort_Wait_For_TX_Buffer_Free();
+		SerialPort_Send_Data('0'+str[i]);
 	}
 }
 //*********
@@ -150,7 +150,7 @@ void SerialPort_Write_Char_To_Buffer (char data)
 	if (TXindice_lectura < TX_BUFFER_LENGHT){
 		TX_BUFFER[TXindice_escritura]= data;
 		TXindice_escritura++;
-	}	
+	}
 }
 
 void SerialPort_Write_String_To_Buffer(char * STR_PTR)
@@ -165,13 +165,11 @@ void SerialPort_Write_String_To_Buffer(char * STR_PTR)
 void SerialPort_Send_Char(char dato)
 {
 	SerialPort_Wait_For_TX_Buffer_Free();
-		SerialPort_Send_Data(dato);
+	SerialPort_Send_Data(dato);
 }
 
 void SerialPort_Update(void)
 {
-	
-	
 	if (UCSR0A & (1<<RXC0)) {  //Byte recibido. Escribir byte en el buffer de entrada
 		if(RXindice_escritura < RX_BUFFER_LENGHT){
 			RX_BUFFER[RXindice_escritura] = UDR0; //guardar dato en el buffer
@@ -179,15 +177,25 @@ void SerialPort_Update(void)
 		}
 	}
 	
-		//Hay byte en el buffer TX para transmitir?
+	//Hay byte en el buffer TX para transmitir?
 	if (TXindice_lectura < TXindice_escritura){
 		SerialPort_Send_Char( TX_BUFFER[TXindice_lectura]);
 		TXindice_lectura++;
-	} else { //No hay datos disponibles para enviar
+		} else { //No hay datos disponibles para enviar
 		TXindice_lectura = 0;
 		TXindice_escritura = 0;
 	}
-	
-	
-	
+}
+
+char SerialPort_Get_Char_From_Buffer(char * ch){
+	if(RXindice_lectura<RXindice_escritura){
+		*ch = RX_BUFFER[ RXindice_lectura];
+		RXindice_lectura++;
+		return 1;// Hay nuevo dato
+	}
+	else{
+		RXindice_lectura=0;
+		RXindice_escritura=0;
+		return 0; // No Hay
+	}
 }

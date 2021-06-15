@@ -13,6 +13,7 @@
 
 static unsigned char Task_Flag=0;
 static unsigned char Serial_Flag=0;
+static unsigned char Reader_Flag=0;
 
 
 void SEOSTimer0Init(){
@@ -25,12 +26,16 @@ void SEOSTimer0Init(){
 
 void SEOSDispatcherTasks(){
 	if(Task_Flag){
-		Menu_Update(); //aplicacion
+		Menu_Print(); //aplicacion
 		Task_Flag = 0;
 	}
 	if(Serial_Flag){
 		SerialPort_Update(); //driver UART
 		Serial_Flag = 0;
+	}
+	if(Reader_Flag){
+		Menu_Update();
+		Reader_Flag = 0;
 	}	
 }
 
@@ -39,9 +44,14 @@ void SEOSGoToSleep(void){
 }
 
 ISR(TIMER0_COMPA_vect){	
-	static char taskCount=0;
+	static char taskCount=0,readerCount=10;
 	
 	Serial_Flag = 1;
+	
+	if(++readerCount==10){
+		Reader_Flag=1;
+		readerCount=0;
+	}
 
 	if(++taskCount==60){
 		Task_Flag=1;
