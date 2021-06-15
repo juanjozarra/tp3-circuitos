@@ -6,7 +6,7 @@
  */ 
 
 
-#include "serialPort.h"
+#include "uart.h"
 #include "generador.h"
 #include "seos.h"
 #include "menu.h"

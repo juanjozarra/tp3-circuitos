@@ -10,5 +10,5 @@ main.c
 
 seos.c
 
-serialPort.c
+uart.c
 

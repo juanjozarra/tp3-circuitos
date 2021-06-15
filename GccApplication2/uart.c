@@ -5,7 +5,7 @@
 *  Author: vfperri
 */
 
-#include "SerialPort.h"
+#include "uart.h"
 
 
 #define TX_BUFFER_LENGHT 64

@@ -7,7 +7,7 @@
 
 
 #include "seos.h"
-#include "serialPort.h"
+#include "uart.h"
 #include "menu.h"
 
 
@@ -52,7 +52,7 @@ void SEOSGoToSleep(void){
 ISR(TIMER0_COMPA_vect){	
 	static char taskCount=0,readerCount=10;
 	
-	Flag_UART = 1;
+	Flag_UART = 1; //Cada 1 tick = 5ms atendemos al periferico UART
 	
 	if(++readerCount==10){ //Cada 10 ticks = 50ms, activo el flag MenuUpdate
 		Flag_MenuUpdate=1;

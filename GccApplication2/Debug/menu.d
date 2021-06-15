@@ -1,4 +1,4 @@
-menu.d menu.o: .././menu.c .././menu.h .././serialPort.h \
+menu.d menu.o: .././menu.c .././menu.h .././uart.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -17,7 +17,7 @@ menu.d menu.o: .././menu.c .././menu.h .././serialPort.h \
 
 .././menu.h:
 
-.././serialPort.h:
+.././uart.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
